@@ -15,4 +15,13 @@ class ProductController extends Controller
         // 2. Kirim data produk ke view 'shop.blade.php'
         return view('shop', ['products' => $products]);
     }
+
+    public function show($id)
+    {
+        // 1. Cari produk di database berdasarkan ID yang diberikan
+        $product = Product::findOrFail($id);
+
+        // 2. Kirim data produk itu ke view baru
+        return view('product-detail', ['product' => $product]);
+    }
 }

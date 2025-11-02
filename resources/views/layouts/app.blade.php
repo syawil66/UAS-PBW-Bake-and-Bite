@@ -14,7 +14,11 @@
         }
 
         body {
-            background-color: #1A1A1A; /* Latar belakang gelap */
+            /* Ganti 'background-texture.jpg' dengan nama file tekstur Anda */
+            background-image: url("{{ asset('images/background-texture.jpg') }}");
+            background-color: #1A1A1A; /* Fallback jika gambar gagal dimuat */
+            background-size: auto; /* Ukuran gambar */
+            background-repeat: repeat; /* Ulangi gambar agar memenuhi layar */
         }
 
         a {
@@ -90,6 +94,22 @@
             list-style-type: none;
         }
 
+        /* Atur link keranjang agar ikon dan teks sejajar */
+        .navbar-cart a {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Jarak antara ikon dan teks */
+        }
+
+        /* Atur ukuran dan goresan ikon */
+        .cart-icon {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor; /* Otomatis pakai warna teks link */
+            stroke-width: 1.5;
+            fill: none;
+        }
+
     </style>
 </head>
 <body>
@@ -106,7 +126,14 @@
                 <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
             <div class="navbar-cart">
-                <a href="{{ route('cart') }}">Cart (0)</a>
+                <a href="{{ route('cart.index') }}">
+
+                    <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+
+                    <span>Cart ({{ count(session('cart', [])) }})</span>
+                </a>
             </div>
         </div>
     </header>
