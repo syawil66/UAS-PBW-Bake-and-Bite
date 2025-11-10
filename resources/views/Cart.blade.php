@@ -36,7 +36,7 @@
     .cart-items-section p, .checkout-section p {
         color: #555;
     }
-    
+
     /* Kolom kiri: Shopping Cart */
     .cart-item {
         display: flex;
@@ -116,6 +116,21 @@
     .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
     #delivery-form { display: none; }
 
+    .remove-btn {
+        background: none;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        padding: 0;
+        font-size: 14px;
+        text-decoration: underline;
+        margin-top: 8px;
+        display: inline-block;
+    }
+    .remove-btn:hover {
+        color: #333;
+    }
+
 </style>
 
 <div class="container cart-page-container">
@@ -126,15 +141,34 @@
 
             @forelse ($cartItems as $id => $item)
                 <div class="cart-item">
-                    {{-- Menggunakan asset('storage/...') sesuai rencana storage:link Anda --}}
                     <img src="{{ asset('storage/' . $item['image_path']) }}" alt="{{ $item['name'] }}">
                     <div class="cart-item-info">
                         <h3>{{ $item['name'] }}</h3>
                         <div class="quantity-selector">
-                            <button class="quantity-btn">-</button>
-                            <span>{{ $item['quantity'] }}</span>
-                            <button class="quantity-btn">+</button>
+                            <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $id }}">
+                                <input type="hidden" name="quantity" value="{{ $item['quantity'] - 1 }}">
+                                <button type="submit" class="quantity-btn" {{ $item['quantity'] <= 1 ? 'disabled' : '' }}>-</button>
+                            </form>
+
+                            <span style="padding: 0 8px; font-weight: bold; min-width: 20px; text-align: center;">
+                                {{ $item['quantity'] }}
+                            </span>
+
+                            <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $id }}">
+                                <input type="hidden" name="quantity" value="{{ $item['quantity'] + 1 }}">
+                                <button type="submit" class="quantity-btn">+</button>
+                            </form>
                         </div>
+
+                        <form action="{{ route('cart.remove') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $id }}">
+                            <button type="submit" class="remove-btn">Remove</button>
+                        </form>
                     </div>
                     <span class="price">Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</span>
                 </div>
@@ -147,11 +181,11 @@
                 <span>Rp{{ number_format($total, 0, ',', '.') }}</span>
             </div>
 
-            <button class="checkout-btn">Checkout</button>
-        </div>
+            </div>
 
-        <div class="checkout-section">
-            <h2>Checkout</h2>
+
+        <form class="checkout-section" action="{{ route('checkout.store') }}" method="POST">
+            @csrf <h2>Checkout</h2>
 
             <h3>Delivery</h3>
             <p>Select how you would like to receive your order:</p>
@@ -165,43 +199,53 @@
                 </div>
             </div>
 
+            <input type="hidden" name="delivery_type" id="delivery_type" value="deliver">
+
             <div id="delivery-form" style="display: block;">
                 <p>Enter your information:</p>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Enter your name">
+                    <input type="text" id="name" name="customer_name" placeholder="Enter your name" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="phone" placeholder="Enter your phone">
+                    <input type="tel" id="phone" name="customer_phone" placeholder="Enter your phone" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" placeholder="Enter your address">
+                    <input type="text" id="address" name="customer_address" placeholder="Enter your address">
                 </div>
             </div>
-        </div>
 
-    </div> </div>
+            <button type="submit" class="checkout-btn">Checkout</button>
 
-{{-- Script untuk toggle delivery (dari latihan kita sebelumnya) --}}
+        </form>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const deliverButton = document.getElementById('btn-deliver');
-        const pickupButton = document.getElementById('btn-pickup');
-        const deliveryForm = document.getElementById('delivery-form');
+            const deliverButton = document.getElementById('btn-deliver');
+            const pickupButton = document.getElementById('btn-pickup');
+            const deliveryForm = document.getElementById('delivery-form');
+            const deliveryTypeInput = document.getElementById('delivery_type');
+            const addressInput = document.getElementById('address');
 
-        deliverButton.addEventListener('click', function() {
-            deliveryForm.style.display = 'block';
-            deliverButton.classList.add('active');
-            pickupButton.classList.remove('active');
-        });
+            deliverButton.addEventListener('click', function() {
+                deliveryForm.style.display = 'block';
+                deliverButton.classList.add('active');
+                pickupButton.classList.remove('active');
+                deliveryTypeInput.value = 'deliver'; // Set value
+                addressInput.required = true; // Alamat jadi wajib
+            });
 
-        pickupButton.addEventListener('click', function() {
-            deliveryForm.style.display = 'none';
-            pickupButton.classList.add('active');
-            deliverButton.classList.remove('active');
+            pickupButton.addEventListener('click', function() {
+                deliveryForm.style.display = 'none';
+                pickupButton.classList.add('active');
+                deliverButton.classList.remove('active');
+                deliveryTypeInput.value = 'pickup'; // Set value
+                addressInput.required = false; // Alamat tidak wajib
+            });
         });
-    });
 </script>
 @endsection

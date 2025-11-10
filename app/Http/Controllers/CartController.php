@@ -64,5 +64,47 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
-    // Kita akan tambahkan fungsi update() dan remove() nanti
+    /**
+     * Update kuantitas item di keranjang.
+     */
+    public function update(Request $request)
+    {
+        // Validasi
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        // Cek jika produk ada di keranjang dan update kuantitasnya
+        if(isset($cart[$request->product_id])) {
+            $cart[$request->product_id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+        }
+
+        // Redirect kembali ke halaman keranjang
+        return redirect()->route('cart.index')->with('success', 'Kuantitas berhasil diupdate!');
+    }
+
+    /**
+     * Menghapus item dari keranjang.
+     */
+    public function remove(Request $request)
+    {
+        // Validasi
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        // Cek jika produk ada di keranjang dan hapus
+        if(isset($cart[$request->product_id])) {
+            unset($cart[$request->product_id]); // Hapus item dari array
+            session()->put('cart', $cart); // Simpan kembali array baru ke session
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Produk berhasil dihapus!');
+    }
 }

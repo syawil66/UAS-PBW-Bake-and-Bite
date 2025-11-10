@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable(); // Untuk deskripsi di halaman detail
-            $table->decimal('price', 10, 0); // Menyimpan harga (misal: 20000)
-            $table->string('image_path')->nullable(); // Menyimpan nama file gambar (misal: 'butter-croissant.jpg')
+            $table->text('description')->nullable();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->integer('stock')->default(0);
+            $table->decimal('price', 10, 0);
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

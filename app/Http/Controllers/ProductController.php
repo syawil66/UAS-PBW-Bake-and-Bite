@@ -3,25 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        // 1. Ambil semua data produk dari database
-        $products = Product::all();
+        // 1. Ambil semua kategori dari database
+        $categories = Category::all();
+        // 2. Tampilkan view
+        return view('shop.index', ['categories' => $categories]);
+    }
 
-        // 2. Kirim data produk ke view 'shop.blade.php'
-        return view('shop', ['products' => $products]);
+    public function showCategory(Category $category)
+    {
+        // 1. Muat produk terkait kategori ini
+        $category->load('products');
+
+        // 2. Tampilkan view
+        return view('shop.category', [
+            'category' => $category,
+            'products' => $category->products
+        ]);
     }
 
     public function show($id)
     {
-        // 1. Cari produk di database berdasarkan ID yang diberikan
         $product = Product::findOrFail($id);
-
-        // 2. Kirim data produk itu ke view baru
         return view('product-detail', ['product' => $product]);
     }
 }

@@ -34,7 +34,7 @@
 <div class="container">
 
     <div class="shop-header">
-        <h1>Croissant</h1>
+        <h1>{{ $category->name }}</h1>
     </div>
 
     <div class="product-grid">
