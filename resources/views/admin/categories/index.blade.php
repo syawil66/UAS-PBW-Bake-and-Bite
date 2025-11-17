@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - Kelola Kategori</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; background: #f9f9f9; }
-        h1 { color: #333; }
-        .btn { padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-        .btn-edit { background: #ffc107; }
-        .btn-delete { background: #dc3545; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background: #eee; }
-        img { max-width: 100px; border-radius: 5px; }
-    </style>
-</head>
-<body>
+@extends('layouts.admin')
+
+@section('content')
     <h1>Manajemen Kategori</h1>
     <p>
         <a href="{{ route('admin.categories.create') }}" class="btn">
@@ -63,8 +48,8 @@
                 <tr>
                     <td colspan="5">Belum ada kategori.</td>
                 </tr>
-            @endfelse
+            @endforelse
         </tbody>
     </table>
-</body>
-</html>
+
+@endsection

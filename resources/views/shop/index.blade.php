@@ -53,7 +53,8 @@
 
         @forelse ($categories as $category)
             <a href="{{ route('shop.category', $category->slug) }}" class="category-card">
-                <img src="{{ asset('storage/', $category->image_path) }}" alt="{{ $category->name }}">
+                {{-- Ini BENAR (menggunakan titik) --}}
+                    <img src="{{ asset('storage/' . $category->image_path) }}" alt="{{ $category->name }}">
                 <h3>{{ $category->name }}</h3>
             </a>
         @empty

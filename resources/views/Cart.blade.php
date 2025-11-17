@@ -235,8 +235,8 @@
                 deliveryForm.style.display = 'block';
                 deliverButton.classList.add('active');
                 pickupButton.classList.remove('active');
-                deliveryTypeInput.value = 'deliver'; // Set value
-                addressInput.required = true; // Alamat jadi wajib
+                deliveryTypeInput.value = 'deliver';
+                addressInput.required = true;
             });
 
             pickupButton.addEventListener('click', function() {

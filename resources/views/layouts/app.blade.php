@@ -125,15 +125,40 @@
                 <li><a href="{{ route('about') }}">About</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
-            <div class="navbar-cart">
-                <a href="{{ route('cart.index') }}">
+            <div class="navbar-right" style="display: flex; align-items: center; gap: 25px;">
 
-                    <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
+                @guest
+                    <a href="{{ route('login') }}" style="font-weight: 500; font-size: 18px;">Login</a>
+                    <a href="{{ route('register') }}"
+                       style="background-color: #E6E0D4; color: #1A1A1A; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-size: 16px; text-decoration: none;">
+                       Register
+                    </a>
+                @endguest
 
+                @auth
+                    <span style="font-weight: 500; font-size: 18px;">Hi, {{ Auth::user()->name }}</span>
+
+                    @if (Auth::user()->is_admin)
+                        <a href="{{ route('admin.products.index') }}" style="font-weight: bold; color: #ffc107; text-decoration: none;">Admin Panel</a>
+                    @endif
+
+                    <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                        @csrf
+                        <button type="submit"
+                                style="background: none; border: none; color: #E6E0D4; cursor: pointer; font-size: 18px; font-weight: 500; padding: 0;">
+                            Logout
+                        </button>
+                    </form>
+                @endauth
+
+                <div class="navbar-cart">
+                    <a href="{{ route('cart.index') }}">
+                        <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
                     <span>Cart ({{ count(session('cart', [])) }})</span>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </header>

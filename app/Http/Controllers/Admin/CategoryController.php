@@ -32,19 +32,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi
         $request->validate([
             'name' => 'required|string|max:255|unique:categories',
             'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        // 2. Handle Upload Gambar
         $imagePath = $request->file('image')->store('categories', 'public');
-
-        // 3. Simpan ke Database
         Category::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name), // Otomatis buat slug, cth: "Pastry & Croissant" -> "pastry-croissant"
+            'slug' => Str::slug($request->name),
             'image_path' => $imagePath,
         ]);
 
@@ -55,15 +51,15 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
-        //
+        //return view('admin.categories.show', ['category' => $category]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
         return view('admin.categories.edit', ['category' => $category]);
     }
@@ -71,32 +67,25 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        // 1. Validasi
         $request->validate([
-            // 'unique' harus mengabaikan ID kategori saat ini
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // Opsional
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        // 2. Siapkan data update
         $updateData = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
         ];
 
-        // 3. Handle jika ada gambar baru
         if ($request->hasFile('image')) {
-            // Hapus gambar lama
             if ($category->image_path) {
                 Storage::disk('public')->delete($category->image_path);
             }
-            // Simpan gambar baru
             $updateData['image_path'] = $request->file('image')->store('categories', 'public');
         }
 
-        // 4. Update database
         $category->update($updateData);
 
         return redirect()->route('admin.categories.index')
@@ -106,15 +95,12 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        // 1. Hapus gambar dari storage
         if ($category->image_path) {
             Storage::disk('public')->delete($category->image_path);
         }
 
-        // 2. Hapus kategori dari database
-        //    (Produk yang terkait akan otomatis di-set null karena migrasi kita)
         $category->delete();
 
         return redirect()->route('admin.categories.index')

@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - Edit Kategori</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; background: #f9f9f9; }
-        h1 { color: #333; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; }
-        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; }
-        .btn { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    </style>
-</head>
-<body>
+@extends('layouts.admin')
+
+@section('content')
     <h1>Edit Kategori: {{ $category->name }}</h1>
 
     @if ($errors->any())
-       ... @endif
+        ... @endif
 
     <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -35,5 +23,5 @@
 
         <button type="submit" class="btn">Update Kategori</button>
     </form>
-</body>
-</html>
+
+@endsection
