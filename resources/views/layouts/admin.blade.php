@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Bake&Bite</title>
     <style>
-        body, h1, h2, h3, p, ul, li { margin: 0; padding: 0; font-family: sans-serif; }
+        body, h1, h2, h3, p, ul, li { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
         body {
             background-color: #f4f7f6;
@@ -28,6 +28,7 @@
             font-size: 24px;
             font-weight: bold;
             border-bottom: 1px solid #34495e;
+            color: white;
         }
         .admin-sidebar-nav ul {
             list-style-type: none;
@@ -51,24 +52,29 @@
             padding: 30px;
         }
 
-        .btn { padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; cursor: pointer; border: none; font-size: 14px; }
+        .btn { padding: 10px 18px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; cursor: pointer; border: none; font-size: 14px; }
         .btn-edit { background: #ffc107; }
         .btn-delete { background: #dc3545; }
+
         .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover { background: #5a6268; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #ddd; text-align: left; }
         th { background: #f9f9f9; }
+        td img { max-width: 80px; border-radius: 5px; }
 
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-wrapper { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 10px; box-sizing: border-box;
+            width: 100%; padding: 12px; box-sizing: border-box;
             border: 1px solid #ccc; border-radius: 5px;
         }
+        .form-group textarea { min-height: 120px; }
 
         .alert-success {
-            background: #d4edda; color: #155724; padding: 10px 15px;
+            background: #d4edda; color: #155724; padding: 15px;
             border-radius: 5px; margin-bottom: 20px;
         }
 
@@ -86,7 +92,7 @@
 
         <aside class="admin-sidebar">
             <div class="admin-sidebar-header">
-                Admin Panel
+                Bake&Bite
             </div>
             <nav class="admin-sidebar-nav">
                 <ul>

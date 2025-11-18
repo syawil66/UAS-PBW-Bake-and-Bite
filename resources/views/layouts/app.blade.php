@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bake&Bite</title>
     <style>
-        /* Reset Dasar */
         body, h1, h2, h3, p, ul, li {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #E6E0D4; /* Warna teks utama (krem) */
+            color: #E6E0D4;
         }
 
         body {
-            /* Ganti 'background-texture.jpg' dengan nama file tekstur Anda */
             background-image: url("{{ asset('images/background-texture.jpg') }}");
-            background-color: #1A1A1A; /* Fallback jika gambar gagal dimuat */
-            background-size: auto; /* Ukuran gambar */
-            background-repeat: repeat; /* Ulangi gambar agar memenuhi layar */
+            background-color: #1A1A1A;
+            background-size: auto;
+            background-repeat: repeat;
         }
 
         a {
-            color: inherit; /* Mewarisi warna dari parent */
+            color: inherit;
             text-decoration: none;
         }
 
@@ -37,19 +35,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 0; /* Padding atas-bawah 30px, kiri-kanan 0 */
+            padding: 30px 0;
         }
 
         .navbar .logo {
             font-size: 28px;
             font-weight: bold;
-            font-family: serif; /* Font logo lebih klasik */
+            font-family: serif;
         }
 
         .navbar-nav {
             display: flex;
-            gap: 40px; /* Jarak antar menu */
-            list-style-type: none; /* Hilangkan bullet points */
+            gap: 40px;
+            list-style-type: none;
         }
 
         .navbar-nav li a {
@@ -59,17 +57,83 @@
         }
 
         .navbar-nav li a:hover {
-            color: #C0A98E; /* Warna hover coklat muda */
+            color: #C0A98E;
         }
 
         .navbar-cart {
-            /* Kita bisa tambahkan ikon keranjang di sini */
             font-weight: 500;
         }
 
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #444;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 5px;
+            color: #E6E0D4;
+        }
+
+        .product-card h3 a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .product-card h3 a:hover {
+            color: #C0A98E;
+        }
+
+        .product-card .price {
+            color: #A0A0A0;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn-white {
+            display: inline-block;
+            background: #fff;
+            color: #1A1A1A;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-white:hover {
+            background-color: #E6E0D4;
+        }
+
+    /* === AKHIR STYLE KARTU PRODUK === */
+
         /* === FOOTER === */
         .footer {
-            background-color: #0F0F0F; /* Warna footer lebih gelap */
+            background-color: #0F0F0F;
             padding: 60px 0;
             margin-top: 100px;
         }
@@ -87,25 +151,23 @@
 
         .footer p, .footer ul li {
             margin-bottom: 10px;
-            color: #A0A0A0; /* Warna teks footer lebih redup */
+            color: #A0A0A0;
         }
 
         .footer ul {
             list-style-type: none;
         }
 
-        /* Atur link keranjang agar ikon dan teks sejajar */
         .navbar-cart a {
             display: flex;
             align-items: center;
-            gap: 8px; /* Jarak antara ikon dan teks */
+            gap: 8px;
         }
 
-        /* Atur ukuran dan goresan ikon */
         .cart-icon {
             width: 28px;
             height: 28px;
-            stroke: currentColor; /* Otomatis pakai warna teks link */
+            stroke: currentColor;
             stroke-width: 1.5;
             fill: none;
         }
@@ -130,8 +192,8 @@
                 @guest
                     <a href="{{ route('login') }}" style="font-weight: 500; font-size: 18px;">Login</a>
                     <a href="{{ route('register') }}"
-                       style="background-color: #E6E0D4; color: #1A1A1A; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-size: 16px; text-decoration: none;">
-                       Register
+                    style="background-color: #E6E0D4; color: #1A1A1A; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-size: 16px; text-decoration: none;">
+                    Register
                     </a>
                 @endguest
 

@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{-- CSS tambahan khusus untuk halaman shop --}}
 <style>
     .shop-header {
         padding-top: 50px;
@@ -13,7 +12,6 @@
         font-size: 60px;
         font-weight: normal;
 
-        /* Memberi efek panah kembali seperti di gambar */
         display: flex;
         align-items: center;
         gap: 20px;
@@ -39,17 +37,14 @@
 
     <div class="product-grid">
 
-        {{-- Loop semua produk dari database --}}
         @forelse ($products as $product)
             <div class="product-card">
 
-                {{-- Link ke halaman detail --}}
                 <a href="{{ route('product.show', ['id' => $product->id]) }}">
-                    <img src="{{ asset('images/' . $product->image_path) }}" alt="{{ $product->name }}">
+                    <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}">
                 </a>
 
                 <h3>
-                    {{-- Link ke halaman detail --}}
                     <a href="{{ route('product.show', ['id' => $product->id]) }}">
                         {{ $product->name }}
                     </a>
@@ -77,9 +72,7 @@
         const backButtonTrigger = document.querySelector('.shop-header h1');
         if (backButtonTrigger) {
             backButtonTrigger.addEventListener('click', function(e) {
-                // Pastikan yang diklik adalah area judul
                 if (e.target.tagName === 'H1' || e.target.tagName === '::before') {
-                    // Kembali ke halaman sebelumnya
                     window.history.back();
                 }
             });

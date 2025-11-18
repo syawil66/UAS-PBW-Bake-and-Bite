@@ -113,20 +113,6 @@
         color: #1A1A1A; /* Balik warna saat di-hover */
     }
 
-    Oke, lanjut!
-
-Sekarang kita akan rapikan bagian "Top Sellers". Saat ini, kita menggunakan inline style (kode style="..." langsung di HTML), yang membuat kode berantakan dan susah diatur.
-
-Kita akan memindahkan semua style itu ke dalam tag <style> di bagian atas, sama seperti yang kita lakukan untuk "About Us". Ini akan membuat kode HTML kita jauh lebih bersih.
-
-File yang akan di-edit: resources/views/home.blade.php
-Langkah 1: Tambahkan CSS untuk "Top Sellers"
-Buka file resources/views/home.blade.php. Cari tag <style> Anda dan tambahkan kode CSS berikut di dalam tag <style> tersebut, setelah style .btn-secondary:hover.
-
-Kode CSS (untuk ditambahkan di home.blade.php):
-
-CSS
-
     /* ... style .btn-secondary:hover sebelumnya ... */
 
     .btn-secondary:hover {
@@ -241,17 +227,27 @@ CSS
 
         @forelse ($topSellers as $product)
             <div class="product-card">
-                <img src="{{ asset('images/' . $product->image_path) }}" alt="{{ $product->name }}">
-                <h3>{{ $product->name }}</h3>
+                <a href="{{ route('product.show', ['id' => $product->id]) }}">
+                    <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}">
+                </a>
+                <h3>
+                    <a href="{{ route('product.show', ['id' => $product->id]) }}">
+                        {{ $product->name }}
+                    </a>
+                </h3>
                 <p class="price">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
-
-                <a href="#" class="btn-white">Add To Cart</a>
+                <form action="{{ route('cart.add') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <button type="submit" class="btn-white">Add To Cart</button>
+                </form>
             </div>
         @empty
             <p style="text-align: center; grid-column: 1 / -1; color: #A0A0A0;">
                 Belum ada produk untuk ditampilkan.
             </p>
         @endforelse
+
     </div>
 </section>
 

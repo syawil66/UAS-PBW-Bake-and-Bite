@@ -30,7 +30,7 @@
 
     .category-card img {
         width: 100%;
-        height: 350px;
+        aspect-ratio: 16 / 10;
         object-fit: cover;
     }
 
@@ -49,7 +49,7 @@
         <h1>Our Categories</h1>
     </div>
 
-    <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
+    <div class="product-grid" style="grid-template-columns: repeat(2, 1fr);">
 
         @forelse ($categories as $category)
             <a href="{{ route('shop.category', $category->slug) }}" class="category-card">

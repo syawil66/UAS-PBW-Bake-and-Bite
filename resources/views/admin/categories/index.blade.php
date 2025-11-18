@@ -1,15 +1,18 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Manajemen Kategori</h1>
-    <p>
+    <div class="header-actions">
+        <h1>Manajemen Kategori</h1>
+    </div>
+
+    <div style="margin-bottom: 20px;">
         <a href="{{ route('admin.categories.create') }}" class="btn">
             + Tambah Kategori Baru
         </a>
-        <a href="{{ route('admin.products.index') }}" class="btn" style="background: #6c757d;">
+        <a href="{{ route('admin.products.index') }}" class="btn btn-secondary" style="margin-left: 10px;">
             Kembali ke Manajemen Produk
         </a>
-    </p>
+    </div>
 
     <table>
         <thead>

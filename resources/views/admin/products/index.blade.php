@@ -10,7 +10,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Gambar</th>
                 <th>Nama Produk</th>
                 <th>Kategori</th>
                 <th>Harga</th>
@@ -21,7 +21,9 @@
         <tbody>
             @forelse ($products as $product)
                 <tr>
-                    <td>{{ $product->id }}</td>
+                    <td>
+                        <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}">
+                    </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name ?? 'N/A' }}</td>
                     <td>Rp{{ number_format($product->price, 0, ',', '.') }}</td>
@@ -29,7 +31,7 @@
                     <td>
                         <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-edit">Edit</a>
 
-                        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display: inline-block;">
+                        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display: inline-block; margin-top: 5px;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
@@ -40,7 +42,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">Belum ada produk.</td>
+                    <td colspan="6" style="text-align: center;">Belum ada produk.</td>
                 </tr>
             @endforelse
         </tbody>

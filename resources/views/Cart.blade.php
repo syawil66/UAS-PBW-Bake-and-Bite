@@ -134,6 +134,22 @@
 </style>
 
 <div class="container cart-page-container">
+    @if (session('error'))
+        <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #f5c6cb;">
+            <strong>Error!</strong> {{ session('error') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #f5c6cb;">
+            <strong>Periksa Input Anda:</strong>
+            <ul style="margin-top: 5px; padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="cart-grid">
 
         <div class="cart-items-section">
@@ -201,7 +217,7 @@
 
             <input type="hidden" name="delivery_type" id="delivery_type" value="deliver">
 
-            <div id="delivery-form" style="display: block;">
+            <div id="contact-info">
                 <p>Enter your information:</p>
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -211,6 +227,9 @@
                     <label for="phone">Phone</label>
                     <input type="tel" id="phone" name="customer_phone" placeholder="Enter your phone" required>
                 </div>
+            </div>
+
+            <div id="address-info" style="display: block;">
                 <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" id="address" name="customer_address" placeholder="Enter your address">
@@ -227,12 +246,11 @@
     document.addEventListener('DOMContentLoaded', function() {
             const deliverButton = document.getElementById('btn-deliver');
             const pickupButton = document.getElementById('btn-pickup');
-            const deliveryForm = document.getElementById('delivery-form');
+            const addressSection = document.getElementById('address-info');
             const deliveryTypeInput = document.getElementById('delivery_type');
             const addressInput = document.getElementById('address');
-
             deliverButton.addEventListener('click', function() {
-                deliveryForm.style.display = 'block';
+                addressSection.style.display = 'block';
                 deliverButton.classList.add('active');
                 pickupButton.classList.remove('active');
                 deliveryTypeInput.value = 'deliver';
@@ -240,11 +258,11 @@
             });
 
             pickupButton.addEventListener('click', function() {
-                deliveryForm.style.display = 'none';
+                addressSection.style.display = 'none';
                 pickupButton.classList.add('active');
                 deliverButton.classList.remove('active');
-                deliveryTypeInput.value = 'pickup'; // Set value
-                addressInput.required = false; // Alamat tidak wajib
+                deliveryTypeInput.value = 'pickup';
+                addressInput.required = false;
             });
         });
 </script>
