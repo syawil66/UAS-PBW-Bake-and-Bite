@@ -5,40 +5,65 @@
 
 <style>
     /* === HERO SECTION === */
-    .hero {
-        /* Menggunakan gambar BREAD-1.jpg dari folder public/images */
-        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("{{ asset('images/BREAD-1.jpg') }}");
-        height: 80vh; /* 80% dari tinggi layar */
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+/* Pastikan tidak ada margin/padding default dari browser */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* Ini penting agar height: 80vh bekerja dengan benar */
+    height: 100%;
+}
 
-        /* Teks di tengah */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 0 20px;
-    }
+/* Bagian ini penting untuk menghilangkan margin/padding browser default */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    /* Menghentikan scroll pada body jika hero sudah 100vh */
+    overflow-x: hidden;
+}
+
+/* Bagian untuk elemen hero */
+.hero {
+    /* 1. KUNCI FULL SCREEN: Menggunakan 100% dari tinggi viewport (layar) */
+    height: 100vh;
+    width: 100%; /* Pastikan lebar juga 100% */
+
+    /* Aturan untuk gambar latar belakang */
+    background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("{{ asset('images/background2.jpeg') }}");
+    background-size: cover; /* Menjamin gambar penuh dan proporsional */
+    background-position: center; /* Memposisikan gambar di tengah */
+    background-repeat: no-repeat;
+
+    /* Aturan untuk menengahkan konten (teks/tombol) di tengah layar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    /* Sesuaikan warna teks agar terlihat di area krem */
+    color: #333;
+}
 
     .hero h1 {
         font-family: serif;
         font-size: 90px;
         font-weight: normal;
-        color: white;
+        color: rgb(52, 14, 14);
     }
 
     .hero p {
         font-size: 20px;
-        color: white;
+        color: rgb(133, 79, 79);
         max-width: 500px;
         margin: 20px 0 30px;
     }
 
     .hero .btn-primary {
-        background-color: #E6E0D4; /* Warna krem */
-        color: #1A1A1A; /* Warna teks gelap */
+        background-color: #301212; /* Warna krem */
+        color: #ffffff; /* Warna teks gelap */
         padding: 15px 35px;
         border-radius: 30px;
         font-weight: bold;
@@ -204,7 +229,7 @@
 <section class="container about-us">
 
     <div class="about-us-image">
-        <img src="{{ asset('images/Croissant1.jpg') }}" alt="Our Bakery">
+        <img src="{{ asset('images/ourshop.jpeg') }}" alt="Our Bakery">
     </div>
 
     <div class="about-us-content">
